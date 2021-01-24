@@ -36,7 +36,7 @@ const sleep = (milliseconds) => {
 function ai() {
     return __awaiter(this, void 0, void 0, function* () {
         yield sleep(0);
-        let generation_count = 50;
+        let generation_count = 20;
         let default_pool = ["w", "a", "s", "d"];
         let game_pool;
         function random_play(game) {
@@ -50,19 +50,37 @@ function ai() {
             }
             return game.score();
         }
-        let counter = 0;
+        function max_by_tolerance(array, tolerance) {
+            let max = array.reduce((e1, e2) => e1.score > e2.score ? e1 : e2).score * tolerance;
+            if (max == 0)
+                return false;
+            for (let i of array) {
+                if (max < i.score)
+                    return false;
+            }
+            return true;
+        }
         while (1) {
+            let score = current_game.score();
+            generation_count = Math.log(score) * 2;
             game_pool = default_pool
                 .map((item) => { return { move: item, game: current_game.clone(), score: 0 }; })
                 .filter((item) => item.game.move[item.move]());
-            for (let game of game_pool) {
-                for (let i = 0; i < generation_count; i++) {
-                    game.score += random_play(game.game.clone());
-                }
-            }
+            let max_score_game = game_pool.reduce((e1, e2) => e1.score > e2.score ? e1 : e2);
+            let tolerance = .97;
             if (game_pool.length == 0)
                 break;
-            current_game.move[game_pool.reduce((e1, e2) => e1.score > e2.score ? e1 : e2).move]();
+            while (!max_by_tolerance(game_pool, tolerance)) {
+                for (let game of game_pool) {
+                    for (let i = 0; i < generation_count; i++) {
+                        game.score += random_play(game.game.clone());
+                    }
+                }
+                console.log(tolerance);
+                tolerance += 0.001;
+            }
+            max_score_game = game_pool.reduce((e1, e2) => e1.score > e2.score ? e1 : e2);
+            current_game.move[max_score_game.move]();
             render();
             yield sleep(0);
         }
