@@ -9,15 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Game from "./Game.js";
 let table_element = document.getElementById("table");
+let score_display_element = document.getElementById("score_display");
+let ai_button_element = document.getElementById("ai_button");
+let computation_scale_element = document.getElementById("computation_scale");
+let computation_scale_label_element = document.getElementById("computation_scale_label");
+let restart_button_element = document.getElementById("restart_button");
+let computation_scale = 2;
+let ai_stop = false;
+computation_scale_element.addEventListener("input", (event) => {
+    computation_scale_label_element.innerText = "" + event.target.value;
+    computation_scale = Number(event.target.value);
+});
+ai_button_element.addEventListener("click", (event) => { ai(); });
+restart_button_element.addEventListener("click", (event) => { current_game = new Game(); render(); ai_stop = true; });
 let colors = { "0": "#CDC0B4", "2": "#EEE4DA", "4": "#EDE0C8", "8": "#F2B179", "16": "#F59563", "32": "#F67C5F", "64": "#E95937", "128": "#F0D86C", "256": "#E5D040", "512": "#E9C02A", "1024": "#E2B913", "2048": "#CDC0B4", "4096": "#5FDB93", "8192": "#5FFB93", "16384": "#000000" };
 let current_game = new Game();
 function render() {
+    score_display_element.innerText = "Current Score: " + current_game.score();
     table_element.innerHTML = "";
     for (let i = 0; i < 4; i++) {
         let table_row = document.createElement("tr");
         for (let j = 0; j < 4; j++) {
             let table_data = document.createElement("td");
             let table_data_div = document.createElement("div");
+            table_data_div.classList.add("item");
             table_data_div.innerText = current_game.game_state[j][i] != 0 ? `${current_game.game_state[j][i]}` : "";
             table_data_div.style.backgroundColor = colors[current_game.game_state[j][i]];
             table_data.appendChild(table_data_div);
@@ -61,8 +76,12 @@ function ai() {
             return true;
         }
         while (1) {
+            if (ai_stop) {
+                ai_stop = false;
+                return;
+            }
             let score = current_game.score();
-            generation_count = Math.log(score) * 2;
+            generation_count = Math.log(score) * computation_scale;
             game_pool = default_pool
                 .map((item) => { return { move: item, game: current_game.clone(), score: 0 }; })
                 .filter((item) => item.game.move[item.move]());
@@ -87,6 +106,6 @@ function ai() {
         render();
     });
 }
-ai();
+//ai()
 render();
 //# sourceMappingURL=index.js.map
