@@ -73,7 +73,6 @@ export default class Game {
         return result;
     }
     shift() {
-        console.log(this.game_state);
         let result = false;
         for (let y = 0; y < 4; y++) {
             for (let x_right = 3; x_right > 0; x_right--) {
@@ -89,7 +88,6 @@ export default class Game {
                 }
             }
         }
-        console.log(this.game_state);
         return result;
     }
     generate_new_piece() {
@@ -102,6 +100,19 @@ export default class Game {
             return false;
         let position = available_positions[Math.floor(Math.random() * available_positions.length)];
         this.game_state[position[0]][position[1]] = Math.random() < 0.9 ? 2 : 4;
+        return true;
+    }
+    score() {
+        let result = 0;
+        for (let i = 0; i < 4; i++)
+            for (let j = 0; j < 4; j++)
+                result += this.game_state[i][j];
+        return result;
+    }
+    clone() {
+        let result = new Game();
+        result.game_state = JSON.parse(JSON.stringify(this.game_state));
+        return result;
     }
 }
 //# sourceMappingURL=Game.js.map

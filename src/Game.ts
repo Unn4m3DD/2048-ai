@@ -5,10 +5,10 @@ export default class Game {
     this.generate_new_piece();
     this.generate_new_piece();
   }
-  rotate_matrix() {
+  rotate_matrix(): void {
     this.game_state = this.game_state[0].map((val, index) => this.game_state.map(row => row[index]).reverse())
   }
-  merge() {
+  merge(): boolean {
     let result = false;
     for (let y = 0; y < 4; y++) {
       for (let x_right = 3; x_right > 0; x_right--) {
@@ -24,8 +24,7 @@ export default class Game {
     }
     return result;
   }
-  shift() {
-    console.log(this.game_state)
+  shift(): boolean {
     let result = false;
     for (let y = 0; y < 4; y++) {
       for (let x_right = 3; x_right > 0; x_right--) {
@@ -40,11 +39,10 @@ export default class Game {
         }
       }
     }
-    console.log(this.game_state)
     return result;
   }
 
-  generate_new_piece() {
+  generate_new_piece(): boolean {
     let available_positions = [];
     for (let i = 0; i < 4; i++)
       for (let j = 0; j < 4; j++)
@@ -52,6 +50,7 @@ export default class Game {
     if (available_positions.length == 0) return false;
     let position = available_positions[Math.floor(Math.random() * available_positions.length)]
     this.game_state[position[0]][position[1]] = Math.random() < 0.9 ? 2 : 4;
+    return true
   }
 
   move: { [key: string]: { (): boolean } } = {
@@ -99,5 +98,19 @@ export default class Game {
         return this.generate_new_piece()
       return result;
     },
+  }
+
+  score(): number {
+    let result = 0;
+    for (let i = 0; i < 4; i++)
+      for (let j = 0; j < 4; j++)
+        result += this.game_state[i][j];
+    return result;
+  }
+
+  clone(): Game {
+    let result = new Game();
+    result.game_state = JSON.parse(JSON.stringify(this.game_state));
+    return result;
   }
 }
