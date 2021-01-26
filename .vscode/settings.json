@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "*.pl": "prolog",
+    "*.bdl": "bdl",
+    "*.shader": "glsl",
+    "vector": "cpp",
+    "*.tcc": "cpp",
+    "list": "cpp",
+    "random": "cpp",
+    "string": "cpp"
+  }
+}
