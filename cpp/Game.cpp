@@ -16,14 +16,14 @@ class Point {
 class Game {
  public:
   uint32_t game_state[4][4];
-  ;
 
   bool generate_new_piece() {
-    vector<Point> available_positions = vector<Point>(16);
+    vector<Point> available_positions = vector<Point>();
+    available_positions.reserve(16);
     for (uint32_t i = 0; i < 4; i++)
       for (uint32_t j = 0; j < 4; j++)
         if (game_state[i][j] == 0) available_positions.push_back(Point(i, j));
-    if (available_positions.size() == 0) return false;
+    if (available_positions.empty()) return false;
     Point* position = &available_positions[rand() % available_positions.size()];
     game_state[position->x][position->y] = (uint32_t)rand() % 10 < 9 ? 2 : 4;
     return true;
@@ -144,13 +144,13 @@ class Game {
 
   void render() {
     printf("---------------------\n");
-    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][0], game_state[1][0], game_state[2][0], game_state[2][0]);
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][3], game_state[1][3], game_state[2][3], game_state[3][3]);
     printf("---------------------\n");
-    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][1], game_state[1][1], game_state[2][1], game_state[2][1]);
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][2], game_state[1][2], game_state[2][2], game_state[3][2]);
     printf("---------------------\n");
-    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][2], game_state[1][2], game_state[2][2], game_state[2][2]);
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][1], game_state[1][1], game_state[2][1], game_state[3][1]);
     printf("---------------------\n");
-    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][3], game_state[1][3], game_state[2][3], game_state[2][3]);
-    printf("---------------------\n\n\n\n");
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][0], game_state[1][0], game_state[2][0], game_state[3][0]);
+    printf("---------------------\n");
   }
 };

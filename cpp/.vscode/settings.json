@@ -4,6 +4,7 @@
     "*.pl": "prolog",
     "*.bdl": "bdl",
     "*.shader": "glsl",
-    "functional": "cpp"
+    "functional": "cpp",
+    "new": "cpp"
   }
 }
