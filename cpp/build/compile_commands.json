@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/andre/repos/2048-solver/cpp/build",
+  "command": "/opt/cuda/bin/g++ -g -o CMakeFiles/2048_ai.dir/ai.cpp.o -c /home/andre/repos/2048-solver/cpp/ai.cpp",
+  "file": "/home/andre/repos/2048-solver/cpp/ai.cpp"
+}
+]

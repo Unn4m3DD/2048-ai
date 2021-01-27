@@ -1,0 +1,3 @@
+/home/andre/repos/2048-solver/cpp/build/CMakeFiles/rebuild_cache.dir
+/home/andre/repos/2048-solver/cpp/build/CMakeFiles/edit_cache.dir
+/home/andre/repos/2048-solver/cpp/build/CMakeFiles/2048_ai.dir

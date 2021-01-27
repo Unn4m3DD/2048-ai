@@ -5,14 +5,18 @@
 #include <map>
 #include <vector>
 using namespace std;
-struct Point {
+class Point {
+ public:
   uint32_t x, y;
+  Point(const Point& point) : x(point.x), y(point.y) {}
   Point(uint32_t x, uint32_t y) : x(x), y(y) {}
+  Point() : x(0), y(0) {}
 };
 
 class Game {
  public:
   uint32_t game_state[4][4];
+  ;
 
   bool generate_new_piece() {
     vector<Point> available_positions = vector<Point>(16);
@@ -95,7 +99,6 @@ class Game {
     bool r2 = shift();
     bool result = r1 || r2;
     rotate_matrix();
-    bool result = r1 || r2;
     if (result)
       return generate_new_piece();
     return result;
@@ -120,7 +123,6 @@ class Game {
     rotate_matrix();
     rotate_matrix();
     rotate_matrix();
-    bool result = r1 || r2;
     if (result)
       return generate_new_piece();
     return result;
@@ -138,5 +140,17 @@ class Game {
     Game* result = new Game();
     memcpy(result->game_state, game_state, 4 * 4 * sizeof(uint32_t));
     return result;
+  }
+
+  void render() {
+    printf("---------------------\n");
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][0], game_state[1][0], game_state[2][0], game_state[2][0]);
+    printf("---------------------\n");
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][1], game_state[1][1], game_state[2][1], game_state[2][1]);
+    printf("---------------------\n");
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][2], game_state[1][2], game_state[2][2], game_state[2][2]);
+    printf("---------------------\n");
+    printf("|%4d|%4d|%4d|%4d|\n", game_state[0][3], game_state[1][3], game_state[2][3], game_state[2][3]);
+    printf("---------------------\n\n\n\n");
   }
 };
