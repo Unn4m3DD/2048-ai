@@ -1,4 +1,7 @@
 {
   "setup": "",
-  "run": "&& serve -s . -l $PORT"
+  "run": "&& serve -s . -l $PORT",
+  "title": "2048 AI",
+  "subtitle": "Artificial Intelligence that plays 2048",
+  "image": "https://raw.githubusercontent.com/Unn4m3DD/2048-ai/master/demo.gif"
 }
